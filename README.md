@@ -1,26 +1,26 @@
 8051
 ====
-* common.v:
+* **common.v**:
   basic definitions and axioms
-* heap.v:
+* **heap.v**:
   memory
-* reg.v:
+* **reg.v**:
   register and flag
-* state.v:
+* **state.v**:
   memory and register and flag
-* code.v:
+* **code.v**:
   8051 assembly in Coq and code heap
-* machine.v:
+* **machine.v**:
   operational semantics
-* rules.v:
+* **rules.v**:
   inference rules
-* soundness.v:
+* **soundness.v**:
   soundness proof
-* rc5.asm:
+* **rc5.asm**:
   rc5
-* rc5.v:
+* **rc5.v**:
   rc5.asm in Coq
-* rc5_proof.v:
+* **rc5_proof**.v:
   proof rc5.v
-* Makefile:
-  make with Coq 8.4 ( Should work with Coq 8.3 though )
+* **Makefile**:
+  make** with Coq 8.4 ( Should work with Coq 8.3 though )
