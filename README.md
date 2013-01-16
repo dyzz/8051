@@ -8,6 +8,8 @@
   register and flag
 * **state.v**:
   memory and register and flag
+* **map.v**:
+  utility for building code heap and spec heap
 * **code.v**:
   8051 assembly in Coq and code heap
 * **machine.v**:
