@@ -1,0 +1,7 @@
+machine.vo machine.glob machine.v.beautified: machine.v common.vo heap.vo reg.vo code.vo state.vo
+state.vo state.glob state.v.beautified: state.v common.vo reg.vo heap.vo
+heap.vo heap.glob heap.v.beautified: heap.v common.vo
+map.vo map.glob map.v.beautified: map.v common.vo
+reg.vo reg.glob reg.v.beautified: reg.v common.vo
+code.vo code.glob code.v.beautified: code.v common.vo reg.vo state.vo map.vo
+common.vo common.glob common.v.beautified: common.v
