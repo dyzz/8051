@@ -16,3 +16,39 @@ trivial.
 auto.
 Qed.
 
+Module Type StateVal.
+Parameter carrier:Type.
+End StateVal.
+
+Module StateMonad(Val:StateVal).
+Definition s := Val.carrier.
+
+Definition StM (a : Type) : Type := s -> (a*s) .
+
+Definition Return (a:Type):a->StM a := fun x s => (x,s) .
+
+Definition Bind (a b:Type):StM a -> (a -> StM b) -> (StM b):=
+  fun c1 c2 s1 => let (x,s2) := c1 s1 in c2 x s2.
+
+
+Definition Bind'(a b:Type):=
+  fun (c1:StM a)(c2:StM b) => Bind c1 (fun _ => c2).
+
+
+Definition Get : StM s := fun s => (s,s).
+
+Definition Put : s -> StM unit := fun s _ => (tt,s).
+
+Infix ">>=" := Bind(at level 60).
+
+Infix ">>"  := Bind'(at level 60).
+
+End StateMonad.
+
+(* Module NatVal <: StateVal. *)
+(* Definition carrier:=nat. *)
+(* End NatVal. *)
+
+(* Module NStM:=StateMonad(NatVal). *)
+
+(* Import NStM. *)
