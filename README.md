@@ -1,5 +1,7 @@
 8051
 ====
+* **int8.v**:
+  8bit machine integer
 * **common.v**:
   basic definitions and axioms
 * **heap.v**:
