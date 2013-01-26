@@ -7,6 +7,8 @@ Require Import state.
 Set Implicit Arguments.
 
 
+
+
 (* could try CodeHeap*State*PC *)
 Definition World := (CodeHeap * State * CodeBlock)%type.
 
@@ -25,25 +27,30 @@ Definition W_Block (w : World) : CodeBlock :=
     | (_, _, b) => b
   end.
 
-Definition GetVal (M:Set)(addr:Addr M)(m:Mem)(rf:Regs)(ff:Flags) :=
+Definition getVal (M:Set)(addr:Addr M)(m:Mem)(rf:Regs)(ff:Flags) :=
   match addr with 
     | A_Imm v => v
     | A_Dir i => read' m i
     | A_Reg r => getReg rf r
     (* | A_DPTR =>  *)
     (* | A_COde => *)
-    | _ => 0
+    | _ => On
 end.
 
 
-(* operational semantics for all the Instr *)
+Definition bool_in_int8(b:bool) := if b then On else In.
+Coercion bool_in_int8 : bool >-> int8.
+
+(* (* operational semantics for all the Instr *) *)
 Definition NextState (c:Instr)(s:State):option State :=
   let m := S_Mem s in
     let rf := S_Reg s in
       let ff := S_Flag s in
-        match c with 
+        match c with
             | add addr =>
-              Some (m, setReg rf RA (rf RA + GetVal addr m rf ff) , ff)
+              Some (m, setReg rf RA (rf RA + getVal addr m rf ff) , ff)
+            | addc addr =>
+              Some (m, setReg rf RA (rf RA + getVal addr m rf ff + getFlag ff FlagC), ff)
             (* lots of instructions here *)
             | _ => None
         end.
@@ -60,13 +67,13 @@ Inductive NextWorld : World -> World -> Prop :=
         NextWorld (ch,(M,R,F),Jump L) (ch,(M,R,F),code)
   | nextW_jnz_eq :
       forall (ch:CodeHeap)(M:Mem)(R:Regs)(F:Flags)(code:CodeBlock)(L:Label),
-      R RA = 0 ->
+      R RA = On ->
       NextWorld (ch,(M,R,F), Seq (jnz L) code)
                 (ch,(M,R,F), code)
   | nextW_jnz_neq :
       forall (ch:CodeHeap)(M:Mem)(R:Regs)(F:Flags)(code newcode:CodeBlock)(L:Label),
         lookupCH ch L code ->
-        R RA <> 0 ->
+        R RA <> On ->
         NextWorld (ch,(M,R,F), Seq (jnz L) code)
                 (ch,(M,R,F), newcode)
 

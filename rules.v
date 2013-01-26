@@ -26,7 +26,7 @@ Definition S_Gua (s : Spec) : Gua :=
   end.
 
 Definition init_state:State :=
-  (empty, fun r:Reg => 0%Z, fun f:Flag => false ).
+  (empty, fun r:Reg => On, fun f:Flag => false ).
 
 
 (* Spec Heap which looks like Code Heap *)
@@ -63,9 +63,9 @@ Fixpoint infer(sh:SpecHeap)(spec:Spec)(code:CodeBlock) : Prop :=
         exists p1:Pre, exists g1:Gua,
           exists p2:Pre, exists g2:Gua,
             lookupSH sh l (p1,g1) /\
-            (forall s : State, p s -> (S_Reg s RA = 0%Z) ->
+            (forall s : State, p s -> (S_Reg s RA = On) ->
                (p1 s /\ (forall s' : State, g1 s s' -> g s s'))) /\
-            (forall s : State, p s -> (S_Reg s RA <> 0%Z) ->
+            (forall s : State, p s -> (S_Reg s RA <> On) ->
                (p2 s /\ (forall s' : State, g2 s s' -> g s s'))) /\
             infer sh (p2,g2) code'
       (* lots of rules here *)

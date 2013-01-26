@@ -1,7 +1,7 @@
 Require Import ZArith.
+Require Export int8.
 
-
-Notation Byte := Z.
+Notation Byte := int8.
 Notation Label := Z.
 
 Set Implicit Arguments.
@@ -52,3 +52,4 @@ End StateMonad.
 (* Module NStM:=StateMonad(NatVal). *)
 
 (* Import NStM. *)
+

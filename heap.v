@@ -1,11 +1,11 @@
 Require Import common.
 Require Import ZArith.
-Open Scope Z_scope.
+Open Scope int8_scope.
 Definition ptr := Byte.
 
 Definition null := 0. (*NULL Pointer*)
 
-Definition ptr_eq_dec := Z_eq_dec.
+Definition ptr_eq_dec := eqb8.
 
 Definition val := Byte.
 
@@ -20,7 +20,7 @@ Definition read (h : heap) (p : ptr) : option val := h p.
 Definition read' (h : heap) (p : ptr) : val :=
   match h p with 
       | Some v => v
-      | None => 0
+      | None => On
   end.
 
 

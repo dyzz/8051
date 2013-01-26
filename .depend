@@ -1,7 +1,13 @@
+rc5.vo rc5.glob rc5.v.beautified: rc5.v framework.vo
 machine.vo machine.glob machine.v.beautified: machine.v common.vo heap.vo reg.vo code.vo state.vo
 state.vo state.glob state.v.beautified: state.v common.vo reg.vo heap.vo
 heap.vo heap.glob heap.v.beautified: heap.v common.vo
 map.vo map.glob map.v.beautified: map.v common.vo
 reg.vo reg.glob reg.v.beautified: reg.v common.vo
+rc5_proof.vo rc5_proof.glob rc5_proof.v.beautified: rc5_proof.v framework.vo rc5.vo
+rules.vo rules.glob rules.v.beautified: rules.v heap.vo common.vo reg.vo state.vo code.vo machine.vo map.vo
+framework.vo framework.glob framework.v.beautified: framework.v common.vo reg.vo code.vo state.vo machine.vo rules.vo
+int8.vo int8.glob int8.v.beautified: int8.v
 code.vo code.glob code.v.beautified: code.v common.vo reg.vo state.vo map.vo
-common.vo common.glob common.v.beautified: common.v
+soundness.vo soundness.glob soundness.v.beautified: soundness.v framework.vo
+common.vo common.glob common.v.beautified: common.v int8.vo

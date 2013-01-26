@@ -12,7 +12,7 @@ Parameter Code:Set.
 Parameter Any:Set.
 (* Addressing Modes *)
 
-Inductive Addr(Mode:Set):Set:=
+Inductive Addr(Mode:Set):Type:=
   | A_Imm : Byte -> Addr Mode
   | A_Dir : Byte -> Addr Mode
   | A_Reg : Reg -> Addr Mode
@@ -20,8 +20,14 @@ Inductive Addr(Mode:Set):Set:=
   | A_Code : Addr Mode
 .
 
+Implicit Arguments A_Imm [Mode].
+Implicit Arguments A_Dir [Mode].
+Implicit Arguments A_Reg [Mode].
+Implicit Arguments A_DPTR [Mode].
+Implicit Arguments A_Code [Mode].
+
 (* Needs to refine Addr with correct addressing mode *)
-Inductive Instr:Set:=
+Inductive Instr:Type:=
   | acall : Label -> Instr (* Absolute Call *)
   | add   : Addr Any -> Instr  (* ADDC: Add Accumulator (With Carry) *)
   | addc  : Addr Any -> Instr  (* ADDC: Add Accumulator (With Carry) *)
@@ -74,7 +80,7 @@ Inductive Instr:Set:=
   (* | xrl : (* Bitwise Exclusive OR       *) *)
 .
 
-Inductive CodeBlock : Set :=
+Inductive CodeBlock : Type :=
   | Seq : Instr -> CodeBlock -> CodeBlock
   | Call : Label -> CodeBlock
   | Jump : Label -> CodeBlock
